@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const app = require("./app")
-const { DB_USER, DB_PASSWORD, DB_HOST, API_VERSION, IP_SERVER } = require("./constanst.js")
+const { DB_USER, DB_PASSWORD, DB_HOST, API_VERSION, IP_SERVER } = require("./constants.js")
 
 const PORT = process.env.PORT || 3000
 
