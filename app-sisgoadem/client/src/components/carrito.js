@@ -38,7 +38,7 @@ const Cart = ({ history }) => {
 		if (isAuthenticated()) {
 			navigate('/shipping');
 		} else {
-			navigate('/signin?redirect=shipping');
+			navigate('/iniciarSesion?redirect=shipping');
 		}
 	};
 
@@ -47,12 +47,12 @@ const Cart = ({ history }) => {
 			{cart.length <= 0 ? (
 				<div className='jumbotron'>
 					<h1 className='display-4'>
-						Your cart is empty{' '}
+						Tu carro esta vacio{' '}
 						<button
-							className='btn btn-light text-primary ml-4'
+							className='btn btn-light btn-outline-warning ml-4'
 							onClick={handleGoBackBtn}
 						>
-							Go Back
+							Volver
 						</button>
 					</h1>
 				</div>

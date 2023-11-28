@@ -67,7 +67,7 @@ const Shop = () => {
 			<div className='row'>
 				<div className='col-md-3 border-right'>
 					<div className='text-muted mb-2'>
-						Filters <span className='fas fa-sliders-h'></span>
+						Filtros <span className='fas fa-sliders-h'></span>
 					</div>
 
 					<nav className='navbar navbar-expand-lg navbar-light bg-light border-top p-3'>
@@ -75,18 +75,18 @@ const Shop = () => {
 							<input
 								className='form-control mr-sm-2'
 								type='search'
-								placeholder='Search'
+								placeholder='Buscar'
 								aria-label='Search'
 								name='search'
 								value={text}
 								onChange={handleSearch}
 							/>
 							<button
-								className='btn btn-outline-success my-2 my-sm-0'
+								className='btn btn-warning my-2 my-sm-0'
 								type='submit'
 								disabled={true}
 							>
-								Search
+								Buscar
 							</button>
 						</form>
 					</nav>

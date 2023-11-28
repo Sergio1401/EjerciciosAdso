@@ -70,7 +70,7 @@ const Home = () => {
 									{successMsg}
 								</div>
 							)}
-						<h3 className='py-4'>New Arrivals</h3>
+						<h3 className='py-4'>Novedades</h3>
 						<div className='row'>
 							{newArrivals &&
 								newArrivals.map(newArrival => (

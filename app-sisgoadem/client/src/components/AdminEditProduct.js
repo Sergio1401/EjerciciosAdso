@@ -96,7 +96,7 @@ const AdminEditProduct = () => {
 				<div className='row'>
 					<div className='col-md-8 mx-auto'>
 						<Link to='/admin/dashboard'>
-							<span className='fas fa-arrow-left'>Go Back</span>
+							<span className='fas fa-arrow-left'>Volver</span>
 						</Link>
 						<div>
 							<br />

@@ -27,11 +27,11 @@ const Product = () => {
 	return (
 		<section className='product-page m-4'>
 			<button
-				to='/shop'
-				className='btn btn-light text-primary mb-4'
+				to='/tienda'
+				className='btn btn-light btn-outline-warning mb-4'
 				onClick={handleGoBackBtn}
 			>
-				Go Back
+				Volver
 			</button>
 			{product && (
 				<div className='row'>

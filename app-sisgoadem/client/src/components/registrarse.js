@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { showErrorMsg } from '../helpers/message';
-import { showLoading } from '../helpers/loading';
-import { setAuthentication, isAuthenticated } from '../helpers/auth';
 import isEmpty from 'validator/lib/isEmpty';
 import isEmail from 'validator/lib/isEmail';
-import { signin } from '../api/auth';
+import equals from 'validator/lib/equals';
+import { showErrorMsg, showSuccessMsg } from '../helpers/message';
+import { showLoading } from '../helpers/loading';
+import { isAuthenticated } from '../helpers/auth';
+import { Link, useNavigate } from 'react-router-dom';
+import { signup } from '../api/auth';
 
-const Signin = () => {
+const Signup = () => {
 	let navigate = useNavigate();
-	let location = useLocation();
 
 	useEffect(() => {
 		if (isAuthenticated() && isAuthenticated().role === 1) {
@@ -20,21 +20,32 @@ const Signin = () => {
 	}, [navigate]);
 
 	const [formData, setFormData] = useState({
+		username: '',
 		email: '',
 		password: '',
+		password2: '',
+		successMsg: false,
 		errorMsg: false,
 		loading: false,
 	});
-
-	const { email, password, errorMsg, loading } = formData;
-
+	const {
+		username,
+		email,
+		password,
+		password2,
+		successMsg,
+		errorMsg,
+		loading,
+	} = formData;
 	/****************************
 	 * EVENT HANDLERS
 	 ***************************/
 	const handleChange = evt => {
+		//console.log(evt);
 		setFormData({
 			...formData,
 			[evt.target.name]: evt.target.value,
+			successMsg: '',
 			errorMsg: '',
 		});
 	};
@@ -43,7 +54,12 @@ const Signin = () => {
 		evt.preventDefault();
 
 		// client-side validation
-		if (isEmpty(email) || isEmpty(password)) {
+		if (
+			isEmpty(username) ||
+			isEmpty(email) ||
+			isEmpty(password) ||
+			isEmpty(password2)
+		) {
 			setFormData({
 				...formData,
 				errorMsg: 'All fields are required',
@@ -53,34 +69,31 @@ const Signin = () => {
 				...formData,
 				errorMsg: 'Invalid email',
 			});
+		} else if (!equals(password, password2)) {
+			setFormData({
+				...formData,
+				errorMsg: 'Passwords do not match',
+			});
 		} else {
-			const { email, password } = formData;
-			const data = { email, password };
+			const { username, email, password } = formData;
+			const data = { username, email, password };
 
 			setFormData({ ...formData, loading: true });
 
-			signin(data)
+			signup(data)
 				.then(response => {
-					setAuthentication(response.data.token, response.data.user);
-					const redirect = location.search.split('=')[1];
-
-					if (isAuthenticated() && isAuthenticated().role === 1) {
-						console.log('Redirecting to admin dashboard');
-						navigate('/admin/dashboard');
-					} else if (
-						isAuthenticated() &&
-						isAuthenticated().role === 0 &&
-						!redirect
-					) {
-						console.log('Redirecting to user dashboard');
-						navigate('/');
-					} else {
-						console.log('Redirecting to shipping');
-						navigate('/shipping');
-					}
+					console.log('Axios signup success: ', response);
+					setFormData({
+						username: '',
+						email: '',
+						password: '',
+						password2: '',
+						loading: false,
+						successMsg: response.data.successMessage,
+					});
 				})
 				.catch(err => {
-					console.log('signin api function error: ', err);
+					console.log('Axios signup error: ', err);
 					setFormData({
 						...formData,
 						loading: false,
@@ -93,8 +106,24 @@ const Signin = () => {
 	/****************************
 	 * VIEWS
 	 ***************************/
-	const showSigninForm = () => (
+	const showSignupForm = () => (
 		<form className='signup-form' onSubmit={handleSubmit} noValidate>
+			{/* username */}
+			<div className='form-group input-group'>
+				<div className='input-group-prepend'>
+					<span className='input-group-text'>
+						<i className='fa fa-user'></i>
+					</span>
+				</div>
+				<input
+					name='username'
+					value={username}
+					className='form-control'
+					placeholder='Nombre de usuario'
+					type='text'
+					onChange={handleChange}
+				/>
+			</div>
 			{/* email */}
 			<div className='form-group input-group'>
 				<div className='input-group-prepend'>
@@ -106,7 +135,7 @@ const Signin = () => {
 					name='email'
 					value={email}
 					className='form-control'
-					placeholder='Email address'
+					placeholder='Correo Electronico'
 					type='email'
 					onChange={handleChange}
 				/>
@@ -122,20 +151,36 @@ const Signin = () => {
 					name='password'
 					value={password}
 					className='form-control'
-					placeholder='Create password'
+					placeholder='Crear Contraseña'
 					type='password'
 					onChange={handleChange}
 				/>
 			</div>
-			{/* signin button */}
+			{/* password2 */}
+			<div className='form-group input-group'>
+				<div className='input-group-prepend'>
+					<span className='input-group-text'>
+						<i className='fa fa-lock'></i>
+					</span>
+				</div>
+				<input
+					name='password2'
+					value={password2}
+					className='form-control'
+					placeholder='Confirmar Contraseña'
+					type='password'
+					onChange={handleChange}
+				/>
+			</div>
+			{/* signup button */}
 			<div className='form-group'>
-				<button type='submit' className='btn btn-primary btn-block'>
-					Signin
+				<button type='submit' className='btn btn-warning btn-block'>
+					Registrarse
 				</button>
 			</div>
 			{/* already have account */}
 			<p className='text-center text-white'>
-				Don't have an account? <Link to='/signup'>Register here</Link>
+				¿Ya estas registrado? <Link to='/iniciarSesion'>Inicia Sesion</Link>
 			</p>
 		</form>
 	);
@@ -145,24 +190,26 @@ const Signin = () => {
 	 ***************************/
 	return (
 		<div
-			className='signin-container'
+			className='signup-container'
 			style={{
 				backgroundImage: `url(${
-					process.env.PUBLIC_URL + '/images/img-signin-bkg.jpg'
+					process.env.PUBLIC_URL + '/images/img-signup-bkg.jpg'
 				})`,
 			}}
 		>
 			<div className='row px-3 vh-100'>
 				<div className='col-md-5 mx-auto align-self-center'>
+					{successMsg && showSuccessMsg(successMsg)}
 					{errorMsg && showErrorMsg(errorMsg)}
 					{loading && (
 						<div className='text-center pb-4'>{showLoading()}</div>
 					)}
-					{showSigninForm()}
+					{showSignupForm()}
+					{/* <p style={{ color: 'white' }}>{JSON.stringify(formData)}</p> */}
 				</div>
 			</div>
 		</div>
 	);
 };
 
-export default Signin;
+export default Signup;

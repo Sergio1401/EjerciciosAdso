@@ -7,7 +7,7 @@ const {
 } = require('../middleware/validator');
 const { signupController, signinController } = require('../controllers/auth');
 
-router.post('/signup', signupValidator, validatorResult, signupController);
-router.post('/signin', signinValidator, validatorResult, signinController);
+router.post('/registrarse', signupValidator, validatorResult, signupController);
+router.post('/iniciarSesion', signinValidator, validatorResult, signinController);
 
 module.exports = router;

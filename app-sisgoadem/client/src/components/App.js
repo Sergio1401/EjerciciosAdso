@@ -3,14 +3,14 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Header from './Header';
 import Home from './Home';
-import Shop from './Shop';
-import Cart from './Cart';
+import Shop from './tienda';
+import Cart from './carrito';
 import Shipping from './Shipping';
 import PlaceOrder from './PlaceOrder';
 import Payment from './Payment';
 import Product from './Product';
-import Signup from './Signup';
-import Signin from './Signin';
+import Signup from './registrarse';
+import Signin from './iniciarSesion';
 import UserDashboard from './UserDashboard';
 import AdminDashboard from './AdminDashboard';
 import AdminEditProduct from './AdminEditProduct';
@@ -25,8 +25,8 @@ const App = () => {
 			<main>
 				<Routes>
 					<Route exact path='/' element={<Home />} />
-					<Route exact path='/shop' element={<Shop />} />
-					<Route exact path='/cart' element={<Cart />} />
+					<Route exact path='/tienda' element={<Shop />} />
+					<Route exact path='/carrito' element={<Cart />} />
 					<Route
 						exact
 						path='/product/:productId'
@@ -35,8 +35,8 @@ const App = () => {
 					<Route exact path='/shipping' element={<Shipping />} />
 					<Route exact path='/placeorder' element={<PlaceOrder />} />
 					<Route exact path='/payment' element={<Payment />} />
-					<Route exact path='/signup' element={<Signup />} />
-					<Route exact path='/signin' element={<Signin />} />
+					<Route exact path='/registrarse' element={<Signup />} />
+					<Route exact path='/iniciarSesion' element={<Signin />} />
 
 					{/* protected user routes */}
 					<Route element={<UserRoute />}>

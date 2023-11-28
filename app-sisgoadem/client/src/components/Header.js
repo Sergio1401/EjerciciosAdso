@@ -9,15 +9,16 @@ const Header = () => {
 
 	const handleLogout = evt => {
 		logout(() => {
-			navigate('/signin');
+			navigate('/iniciarSesion');
 		});
 	};
 
 	// views
 	const showNavigation = () => (
-		<nav className='navbar navbar-expand-lg navbar-light bg-light'>
-			<Link to='/' className='navbar-brand'>
-				Logo
+		<nav className='navbar navbar-expand-lg navbar-dark bg-dark'>
+			
+			<Link to='/' className='navbar-brand	'>
+				SISGOADEM
 			</Link>
 			<button
 				className='navbar-toggler'
@@ -37,21 +38,21 @@ const Header = () => {
 						<Fragment>
 							<li className='nav-item'>
 								<Link to='/' className='nav-link'>
-									<i className='fas fa-home'></i> Home
+									<i className='fas fa-home'></i> Inicio
 								</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to='/shop' className='nav-link'>
-									<i className='fas fa-shopping-bag'></i> Shop
+								<Link to='/tienda' className='nav-link'>
+									<i className='fas fa-shopping-bag'></i> Tienda
 								</Link>
 							</li>
 							<li
 								className='nav-item mr-2'
 								style={{ position: 'relative' }}
 							>
-								<Link to='/cart' className='nav-link'>
+								<Link to='/carrito' className='nav-link'>
 									<i className='fas fa-shopping-cart'></i>{' '}
-									Cart{' '}
+									Carrito{' '}
 									<span
 										className='badge badge-danger'
 										style={{
@@ -64,14 +65,14 @@ const Header = () => {
 								</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to='/signup' className='nav-link'>
-									<i className='fas fa-edit'></i> Signup
+								<Link to='/registrarse' className='nav-link'>
+									<i className='fas fa-edit'></i> Registrarse
 								</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to='/signin' className='nav-link'>
+								<Link to='/iniciarSesion' className='nav-link'>
 									<i className='fas fa-sign-in-alt'></i>{' '}
-									Signin
+									Iniciar Sesion
 								</Link>
 							</li>
 						</Fragment>
@@ -87,21 +88,21 @@ const Header = () => {
 							</li> */}
 							<li className='nav-item'>
 								<Link to='/' className='nav-link'>
-									<i className='fas fa-home'></i> Home
+									<i className='fas fa-home'></i> Inicio
 								</Link>
 							</li>
 							<li className='nav-item'>
-								<Link to='/shop' className='nav-link'>
-									<i className='fas fa-shopping-bag'></i> Shop
+								<Link to='/tienda' className='nav-link'>
+									<i className='fas fa-shopping-bag'></i> Tienda
 								</Link>
 							</li>
 							<li
 								className='nav-item mr-2'
 								style={{ position: 'relative' }}
 							>
-								<Link to='/cart' className='nav-link'>
+								<Link to='/carrito' className='nav-link'>
 									<i className='fas fa-shopping-cart'></i>{' '}
-									Cart{' '}
+									Carrrito{' '}
 									<span
 										className='badge badge-danger'
 										style={{
@@ -124,7 +125,7 @@ const Header = () => {
 									className='nav-link'
 								>
 									<i className='fas fa-user-cog'></i>{' '}
-									Dashboard
+									Administrador
 								</Link>
 							</li>
 						</Fragment>
@@ -138,7 +139,7 @@ const Header = () => {
 									onClick={handleLogout}
 								>
 									<i className='fas fa-sign-out-alt'></i>{' '}
-									Logout
+									Salir
 								</button>
 							</li>
 						</Fragment>
